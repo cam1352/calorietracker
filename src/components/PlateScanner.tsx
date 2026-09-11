@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Camera, Upload, Sparkles, AlertCircle, RefreshCw, Image as ImageIcon } from 'lucide-react';
+import { Camera, Upload, Sparkles, AlertCircle, RefreshCw } from 'lucide-react';
 import { PlateAnalysisResult } from '../types';
 
 interface PlateScannerProps {
@@ -19,26 +19,30 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Sample food presets for quick instant testing without uploading files
+  // Sample food presets for quick testing
   const samplePresets = [
     {
-      name: 'Salmon Bowl',
-      image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&auto=format&fit=crop&q=80',
-    },
-    {
-      name: 'Avocado Salad',
-      image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80',
-    },
-    {
-      name: 'Steak & Veggies',
+      id: 'steak-corn-potatoes',
+      name: 'Steak, Potatoes & Corn (1,150 kcal)',
       image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80',
     },
     {
+      id: 'salmon-bowl',
+      name: 'Salmon & Quinoa Bowl',
+      image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&auto=format&fit=crop&q=80',
+    },
+    {
+      id: 'avocado-salad',
+      name: 'Avocado Chicken Salad',
+      image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80',
+    },
+    {
+      id: 'berry-pancakes',
       name: 'Pancakes & Berries',
       image: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600&auto=format&fit=crop&q=80',
     }
@@ -104,27 +108,19 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
     reader.readAsDataURL(file);
   };
 
-  const handlePresetSelect = async (imageUrl: string) => {
+  const handlePresetSelect = async (preset: { id: string; name: string; image: string }) => {
     try {
       setLoading(true);
       setError(null);
-      setSelectedImage(imageUrl);
-      
-      // Fetch preset image and convert to base64
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        analyzePlate(reader.result as string);
-      };
-      reader.readAsDataURL(blob);
+      setSelectedImage(preset.image);
+      analyzePlate(preset.image, preset.id);
     } catch (e) {
       setLoading(false);
       setError('Failed to load sample image.');
     }
   };
 
-  const analyzePlate = async (base64Image: string) => {
+  const analyzePlate = async (base64Image: string, presetId?: string) => {
     if (!isPro && scansRemaining <= 0) {
       onOpenPricing();
       return;
@@ -137,7 +133,7 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
       const res = await fetch('/api/analyze-plate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64: base64Image }),
+        body: JSON.stringify({ imageBase64: base64Image, presetId }),
       });
 
       if (!res.ok) {
@@ -166,13 +162,13 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
         <div className="text-center max-w-xl mx-auto mb-8 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 mb-2">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>AI Food & Calorie Vision</span>
+            <span>AI Calorie Estimation & Plate Reader</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Snap Your Food Plate
+            Snap & Read Food Plate
           </h2>
           <p className="text-slate-400 text-sm">
-            Take a photo or upload an image. AI will read everything on your plate, detail the calories per item, and calculate macros.
+            Reads itemized calories (e.g. Corn 250 kcal, Potatoes 400 kcal, Meat 500 kcal = 1,150 total kcal) with exact timestamp logging.
           </p>
         </div>
 
@@ -197,9 +193,9 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
                 <Camera className="w-8 h-8 text-emerald-400 absolute" />
               </div>
               <div>
-                <p className="text-white font-bold text-lg">AI Reading Your Plate...</p>
+                <p className="text-white font-bold text-lg">AI Reading Plate & Items...</p>
                 <p className="text-slate-400 text-xs mt-1 animate-pulse">
-                  Identifying items, measuring portion sizes, and calculating per-item calories
+                  Calculating itemized calories (Corn, Potatoes, Meat) & saving daily totals
                 </p>
               </div>
             </div>
@@ -267,7 +263,7 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
                   Upload or Take Food Photo
                 </h3>
                 <p className="text-slate-400 text-xs max-w-sm mx-auto">
-                  Drag and drop your meal photo here, or use live camera
+                  Drag & drop your meal photo, or capture live using camera
                 </p>
               </div>
 
@@ -300,16 +296,16 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
           )}
         </div>
 
-        {/* Sample Food Presets for Instant Demo */}
+        {/* Sample Food Presets */}
         <div className="mt-8 pt-6 border-t border-slate-800/80">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 text-center sm:text-left">
-            Or try instant sample food photos:
+            Or test with sample food plates:
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {samplePresets.map((preset, idx) => (
+            {samplePresets.map((preset) => (
               <button
-                key={idx}
-                onClick={() => handlePresetSelect(preset.image)}
+                key={preset.id}
+                onClick={() => handlePresetSelect(preset)}
                 disabled={loading}
                 className="group relative rounded-xl overflow-hidden border border-slate-800 hover:border-emerald-500/60 transition-all text-left bg-slate-950"
               >
@@ -319,7 +315,7 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
                   className="w-full h-20 object-cover group-hover:scale-105 transition-transform duration-300 opacity-80 group-hover:opacity-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-2 flex items-end">
-                  <span className="text-xs font-semibold text-white group-hover:text-emerald-300">
+                  <span className="text-[11px] font-semibold text-white group-hover:text-emerald-300 leading-tight">
                     {preset.name}
                   </span>
                 </div>

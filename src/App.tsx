@@ -5,6 +5,7 @@ import { ItemizedCalorieCard } from './components/ItemizedCalorieCard';
 import { DailyTracker } from './components/DailyTracker';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { PricingModal } from './components/PricingModal';
+import { AuthModal } from './components/AuthModal';
 import { PlateAnalysisResult, MealEntry, UserGoals, UserSubscription } from './types';
 import {
   getStoredMeals,
@@ -15,13 +16,20 @@ import {
   saveSubscription,
   decrementFreeScan,
 } from './utils/storage';
-import { CheckCircle2, Sparkles } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'scan' | 'daily' | 'analytics'>('scan');
   const [meals, setMeals] = useState<MealEntry[]>([]);
   const [goals, setGoals] = useState<UserGoals>(getStoredGoals());
   const [subscription, setSubscription] = useState<UserSubscription>(getStoredSubscription());
+  
+  // User Auth State
+  const [user, setUser] = useState<{ name: string; email: string } | null>(() => {
+    const saved = localStorage.getItem('nutrisnap_user_v1');
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   const [scanResult, setScanResult] = useState<PlateAnalysisResult | null>(null);
   const [scanImage, setScanImage] = useState<string | null>(null);
@@ -80,7 +88,13 @@ export function App() {
     };
     saveSubscription(updatedSub);
     setSubscription(updatedSub);
-    showToast('🎉 upgraded to NutriSnap Pro! Enjoy unlimited scans.');
+    showToast('🎉 Upgraded to NutriSnap Pro! Enjoy unlimited scans.');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('nutrisnap_user_v1');
+    setUser(null);
+    showToast('Logged out successfully');
   };
 
   return (
@@ -91,6 +105,9 @@ export function App() {
         setActiveTab={setActiveTab}
         subscription={subscription}
         onOpenPricing={() => setIsPricingOpen(true)}
+        user={user}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onLogout={handleLogout}
       />
 
       {/* Notification Toast */}
@@ -152,9 +169,19 @@ export function App() {
         onUpgradeSuccess={handleUpgradeSuccess}
       />
 
+      {/* Sign Up / Login Auth Modal */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onLoginSuccess={(userData) => {
+          setUser(userData);
+          showToast(`Welcome ${userData.name}!`);
+        }}
+      />
+
       {/* Footer */}
       <footer className="py-6 border-t border-slate-800 text-center text-xs text-slate-500">
-        <p>NutriSnap AI Calorie & Plate Reader © 2026. Powered by Google Gemini 2.5 Vision & Stripe Payments.</p>
+        <p>NutriSnap AI Calorie & Plate Reader © 2026. Powered by Google Gemini Vision & Stripe Payments.</p>
       </footer>
     </div>
   );
