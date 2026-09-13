@@ -3,8 +3,8 @@ import { Camera, BarChart3, Calendar, Crown, Zap, UserCheck, LogIn, LogOut } fro
 import { UserSubscription } from '../types';
 
 interface HeaderProps {
-  activeTab: 'scan' | 'daily' | 'analytics';
-  setActiveTab: (tab: 'scan' | 'daily' | 'analytics') => void;
+  activeTab: 'scan' | 'daily' | 'analytics' | 'seo';
+  setActiveTab: (tab: 'scan' | 'daily' | 'analytics' | 'seo') => void;
   subscription: UserSubscription;
   onOpenPricing: () => void;
   user: { name: string; email: string } | null;
