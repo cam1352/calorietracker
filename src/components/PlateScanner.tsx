@@ -288,6 +288,7 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
+                  capture="environment"
                   onChange={handleFileUpload}
                   className="hidden"
                 />
