@@ -6,6 +6,9 @@ import { DailyTracker } from './components/DailyTracker';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { PricingModal } from './components/PricingModal';
 import { AuthModal } from './components/AuthModal';
+import { SEOArticle } from './components/SEOArticle';
+import faqsData from './data/faqs.json';
+import blogsData from './data/blogs.json';
 import { PlateAnalysisResult, MealEntry, UserGoals, UserSubscription } from './types';
 import {
   getStoredMeals,
@@ -19,7 +22,9 @@ import {
 import { CheckCircle2 } from 'lucide-react';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<'scan' | 'daily' | 'analytics'>('scan');
+  const [activeTab, setActiveTab] = useState<'scan' | 'daily' | 'analytics' | 'seo'>('scan');
+  const [seoData, setSeoData] = useState<any>(null);
+  const [seoType, setSeoType] = useState<'blog' | 'faq'>('blog');
   const [meals, setMeals] = useState<MealEntry[]>([]);
   const [goals, setGoals] = useState<UserGoals>(getStoredGoals());
   const [subscription, setSubscription] = useState<UserSubscription>(getStoredSubscription());
@@ -159,6 +164,19 @@ export function App() {
         {activeTab === 'analytics' && (
           <AnalyticsDashboard meals={meals} goals={goals} />
         )}
+      
+        {activeTab === 'seo' && seoData && (
+          <SEOArticle 
+            type={seoType} 
+            data={seoData} 
+            onBack={() => {
+              setActiveTab('scan');
+              setSeoData(null);
+              window.scrollTo(0, 0);
+            }} 
+          />
+        )}
+
       </main>
 
       {/* Pricing Upgrade Modal */}
@@ -180,9 +198,109 @@ export function App() {
       />
 
       {/* Footer */}
-      <footer className="py-6 border-t border-slate-800 text-center text-xs text-slate-500">
-        <p>Calorie Tracker © 2026. Powered by Google Gemini Vision & Stripe Payments.</p>
+      
+      {/* SEO Mega Footer */}
+      <footer className="bg-slate-950 pt-16 pb-8 border-t border-slate-800 mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            
+            {/* Top Blogs Column 1 */}
+            <div>
+              <h4 className="text-white font-bold mb-4 uppercase tracking-wider text-xs">Featured Diet Guides</h4>
+              <ul className="space-y-2 text-xs">
+                {blogsData.slice(0, 50).map(b => (
+                  <li key={b.id}>
+                    <button 
+                      onClick={() => {
+                        setSeoData(b);
+                        setSeoType('blog');
+                        setActiveTab('seo');
+                        window.scrollTo(0, 0);
+                      }}
+                      className="text-slate-400 hover:text-emerald-400 text-left transition-colors truncate w-full"
+                    >
+                      {b.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Top Blogs Column 2 */}
+            <div>
+              <h4 className="text-white font-bold mb-4 uppercase tracking-wider text-xs">Nutrition Strategy</h4>
+              <ul className="space-y-2 text-xs">
+                {blogsData.slice(25, 100).map(b => (
+                  <li key={b.id}>
+                    <button 
+                      onClick={() => {
+                        setSeoData(b);
+                        setSeoType('blog');
+                        setActiveTab('seo');
+                        window.scrollTo(0, 0);
+                      }}
+                      className="text-slate-400 hover:text-emerald-400 text-left transition-colors truncate w-full"
+                    >
+                      {b.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* FAQs Column 1 */}
+            <div>
+              <h4 className="text-white font-bold mb-4 uppercase tracking-wider text-xs">Common Questions</h4>
+              <ul className="space-y-2 text-xs">
+                {faqsData.slice(0, 50).map(f => (
+                  <li key={f.id}>
+                    <button 
+                      onClick={() => {
+                        setSeoData(f);
+                        setSeoType('faq');
+                        setActiveTab('seo');
+                        window.scrollTo(0, 0);
+                      }}
+                      className="text-slate-400 hover:text-emerald-400 text-left transition-colors truncate w-full"
+                    >
+                      {f.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* FAQs Column 2 */}
+            <div>
+              <h4 className="text-white font-bold mb-4 uppercase tracking-wider text-xs">App Support</h4>
+              <ul className="space-y-2 text-xs">
+                {faqsData.slice(50, 100).map(f => (
+                  <li key={f.id}>
+                    <button 
+                      onClick={() => {
+                        setSeoData(f);
+                        setSeoType('faq');
+                        setActiveTab('seo');
+                        window.scrollTo(0, 0);
+                      }}
+                      className="text-slate-400 hover:text-emerald-400 text-left transition-colors truncate w-full"
+                    >
+                      {f.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+
+          <div className="pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>Calorie Tracker &copy; 2026. Powered by Google Gemini Vision & Stripe Payments.</p>
+            <p className="mt-2 text-[10px] text-slate-600">Disclaimer: AI nutritional analysis is an estimate and should not replace professional medical advice.</p>
+          </div>
+        </div>
       </footer>
+
     </div>
   );
 }
