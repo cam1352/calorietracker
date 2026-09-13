@@ -162,7 +162,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'NutriSnap Pro - Unlimited AI Calorie Scanning',
+              name: 'Calorie Tracker Pro - Unlimited AI Calorie Scanning',
               description: 'Unlimited AI food recognition, per-item calorie breakdowns, and daily/weekly/monthly analytics export.',
               images: ['https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500&auto=format&fit=crop&q=80']
             },
@@ -195,5 +195,5 @@ app.get('/api/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🥗 NutriSnap Express Server running on http://localhost:${PORT}`);
+  console.log(`🥗 Calorie Tracker Express Server running on http://localhost:${PORT}`);
 });

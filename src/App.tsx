@@ -26,7 +26,7 @@ export function App() {
   
   // User Auth State
   const [user, setUser] = useState<{ name: string; email: string } | null>(() => {
-    const saved = localStorage.getItem('nutrisnap_user_v1');
+    const saved = localStorage.getItem('calorietracker_user_v1');
     return saved ? JSON.parse(saved) : null;
   });
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -88,11 +88,11 @@ export function App() {
     };
     saveSubscription(updatedSub);
     setSubscription(updatedSub);
-    showToast('🎉 Upgraded to NutriSnap Pro! Enjoy unlimited scans.');
+    showToast('🎉 Upgraded to Calorie Tracker Pro! Enjoy unlimited scans.');
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('nutrisnap_user_v1');
+    localStorage.removeItem('calorietracker_user_v1');
     setUser(null);
     showToast('Logged out successfully');
   };
@@ -181,7 +181,7 @@ export function App() {
 
       {/* Footer */}
       <footer className="py-6 border-t border-slate-800 text-center text-xs text-slate-500">
-        <p>NutriSnap AI Calorie & Plate Reader © 2026. Powered by Google Gemini Vision & Stripe Payments.</p>
+        <p>Calorie Tracker © 2026. Powered by Google Gemini Vision & Stripe Payments.</p>
       </footer>
     </div>
   );

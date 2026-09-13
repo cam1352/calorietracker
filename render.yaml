@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: nutrisnap-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm run server
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+
+  - type: web
+    name: nutrisnap-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_STRIPE_PUBLIC_KEY
+        sync: false
+      - key: VITE_API_URL
+        value: https://nutrisnap-api.onrender.com # Will need to be updated after initial deploy

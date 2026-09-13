@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Zap, Crown, ShieldCheck, Sparkles, CreditCard } from 'lucide-react';
+import { X, Check, Crown, ShieldCheck, CreditCard } from 'lucide-react';
 import { UserSubscription } from '../types';
 
 interface PricingModalProps {
@@ -35,10 +35,8 @@ export const PricingModal: React.FC<PricingModalProps> = ({
       const data = await res.json();
 
       if (data.url) {
-        // Redirect to Stripe Checkout page
         window.location.href = data.url;
       } else if (data.isMock) {
-        // Instant upgrade for demo when Stripe secret keys are not configured
         setTimeout(() => {
           onUpgradeSuccess();
           setLoading(false);
@@ -69,7 +67,7 @@ export const PricingModal: React.FC<PricingModalProps> = ({
         <div className="text-center space-y-2 pt-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold border border-amber-500/20">
             <Crown className="w-3.5 h-3.5 fill-amber-400" />
-            <span>NutriSnap Pro Access</span>
+            <span>Calorie Tracker Pro</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
             Unlock Unlimited AI Food Scanning
@@ -124,7 +122,7 @@ export const PricingModal: React.FC<PricingModalProps> = ({
         {/* Features List */}
         <div className="space-y-2.5 text-xs text-slate-300">
           {[
-            'Unlimited AI Food Plate Scans (Gemini Vision 2.5)',
+            'Unlimited AI Food Plate Scans (Gemini Vision)',
             'Itemized Calorie & Macro Breakdown per component',
             'Full Culinary Ingredient & Preparation Explanations',
             'Per Day / Per Week / Per Month Tracking Dashboard',

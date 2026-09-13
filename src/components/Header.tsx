@@ -33,13 +33,13 @@ export const Header: React.FC<HeaderProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-                  Nutri<span className="text-emerald-400">Snap</span>
+                  Calorie <span className="text-emerald-400">Tracker</span>
                 </span>
                 <span className="text-[10px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  AI 2.5
+                  AI Vision
                 </span>
               </div>
-              <p className="text-xs text-slate-400 hidden sm:block">AI Plate Calorie & Macro Reader</p>
+              <p className="text-xs text-slate-400 hidden sm:block">AI Photo Food & Plate Calorie Reader</p>
             </div>
           </div>
 
