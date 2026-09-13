@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs font-semibold text-white">
                   <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="hidden md:inline">{user.name}</span>
+                  <span className="hidden lg:inline">{user.name}</span>
                 </div>
                 <button
                   onClick={onLogout}
@@ -101,25 +101,27 @@ export const Header: React.FC<HeaderProps> = ({
             ) : (
               <button
                 onClick={onOpenAuth}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-all"
+                className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-all"
+                title="Sign In"
               >
                 <LogIn className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Sign Up / Log In</span>
+                <span className="hidden sm:inline">Sign In</span>
               </button>
             )}
 
             {subscription.isPro ? (
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/30 text-amber-300 text-xs font-semibold">
+              <div className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/30 text-amber-300 text-xs font-semibold">
                 <Crown className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                <span className="hidden sm:inline">Pro Unlimited</span>
+                <span className="hidden sm:inline">Pro</span>
               </div>
             ) : (
               <button
                 onClick={onOpenPricing}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 text-xs font-bold transition-all shadow-lg shadow-emerald-500/20"
+                className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 text-xs font-bold transition-all shadow-lg shadow-emerald-500/20"
+                title="Upgrade to Pro"
               >
                 <Zap className="w-3.5 h-3.5 fill-slate-950" />
-                <span>Upgrade ($4.99/mo)</span>
+                <span className="hidden sm:inline">Upgrade</span>
               </button>
             )}
           </div>
