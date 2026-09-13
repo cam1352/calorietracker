@@ -23,6 +23,14 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+
+  
+  const recommendedRecipes = [
+    { id: 'r1', name: 'High Protein Chicken Bowl', time: '15 min', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80' },
+    { id: 'r2', name: 'Keto Salmon Salad', time: '10 min', image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&auto=format&fit=crop&q=80' },
+    { id: 'r3', name: 'Vegan Buddha Bowl', time: '20 min', image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80' }
+  ];
 
   // Sample food presets for quick testing
   const samplePresets = [
@@ -210,66 +218,7 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
               <canvas ref={canvasRef} className="hidden" />
               <div className="flex items-center justify-center gap-3">
                 <button
-                  onClick={capturePhoto}
-                  className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/30 flex items-center gap-2"
-                >
-                  <Camera className="w-4 h-4" />
-                  Capture Photo
-                </button>
-                <button
-                  onClick={stopCamera}
-                  className="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-sm"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          ) : selectedImage ? (
-            <div className="w-full space-y-4">
-              <div className="relative rounded-xl overflow-hidden max-h-[320px] mx-auto border border-slate-800 shadow-xl">
-                <img
-                  src={selectedImage}
-                  alt="Selected Food Plate"
-                  className="w-full h-64 object-cover"
-                />
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <button
-                  onClick={() => analyzePlate(selectedImage)}
-                  className="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/30 flex items-center gap-2"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                  Re-Analyze Plate
-                </button>
-                <button
-                  onClick={() => {
-                    setSelectedImage(null);
-                    if (fileInputRef.current) fileInputRef.current.value = '';
-                  }}
-                  className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold"
-                >
-                  Choose Different Photo
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto shadow-inner">
-                <Camera className="w-8 h-8" />
-              </div>
-
-              <div>
-                <h3 className="text-lg font-bold text-white mb-1">
-                  Upload or Take Food Photo
-                </h3>
-                <p className="text-slate-400 text-xs max-w-sm mx-auto">
-                  Drag & drop your meal photo, or capture live using camera
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <button
-                  onClick={startCamera}
+                  onClick={() => cameraInputRef.current?.click()}
                   className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/20 flex items-center gap-2 transition-all hover:scale-105"
                 >
                   <Camera className="w-4 h-4" />
@@ -288,6 +237,13 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+                <input
+                  ref={cameraInputRef}
+                  type="file"
+                  accept="image/*"
                   capture="environment"
                   onChange={handleFileUpload}
                   className="hidden"
@@ -296,6 +252,35 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
             </div>
           )}
         </div>
+
+        
+        {/* Recommended Recipes */}
+        <div className="mt-8 pt-6 border-t border-slate-800/80">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 text-center sm:text-left">
+            Recommended Recipes for you:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {recommendedRecipes.map((recipe) => (
+              <div
+                key={recipe.id}
+                className="group relative rounded-xl overflow-hidden border border-slate-800 hover:border-emerald-500/60 transition-all text-left bg-slate-950 cursor-pointer"
+              >
+                <img
+                  src={recipe.image}
+                  alt={recipe.name}
+                  className="w-full h-24 object-cover group-hover:scale-105 transition-transform duration-300 opacity-80 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-3 flex flex-col justify-end">
+                  <span className="text-[12px] font-semibold text-white group-hover:text-emerald-300 leading-tight">
+                    {recipe.name}
+                  </span>
+                  <span className="text-[10px] text-emerald-400 mt-1">{recipe.time}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
 
         {/* Sample Food Presets */}
         <div className="mt-8 pt-6 border-t border-slate-800/80">
