@@ -17,3 +17,6 @@ Thumbs.db
 .vscode
 .idea
 *.log
+
+# Local Netlify folder
+.netlify

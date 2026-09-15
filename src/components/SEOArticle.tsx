@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowLeft, BookOpen, HelpCircle } from 'lucide-react';
 
 interface SEOArticleProps {
@@ -8,6 +8,18 @@ interface SEOArticleProps {
 }
 
 export const SEOArticle: React.FC<SEOArticleProps> = ({ type, data, onBack }) => {
+  useEffect(() => {
+    if (data) {
+      document.title = `${data.title} | Calorie Tracker`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        // Strip HTML tags for the meta description
+        const plainText = data.content.replace(/<[^>]+>/g, '').substring(0, 155) + '...';
+        metaDesc.setAttribute('content', plainText);
+      }
+    }
+  }, [data]);
+
   if (!data) return null;
 
   return (
@@ -23,7 +35,7 @@ export const SEOArticle: React.FC<SEOArticleProps> = ({ type, data, onBack }) =>
       <article className="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 shadow-2xl bg-slate-900/80">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20 mb-6 uppercase tracking-wider">
           {type === 'blog' ? <BookOpen className="w-4 h-4" /> : <HelpCircle className="w-4 h-4" />}
-          <span>{type === 'blog' ? 'NutriSnap Blog' : 'Frequently Asked Questions'}</span>
+          <span>{type === 'blog' ? 'Calorie Tracker Blog' : 'Frequently Asked Questions'}</span>
         </div>
         
         <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-6 leading-tight">

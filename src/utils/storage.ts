@@ -1,9 +1,9 @@
 import { MealEntry, UserGoals, UserSubscription } from '../types';
 
 const STORAGE_KEYS = {
-  MEALS: 'nutrisnap_meals_v1',
-  GOALS: 'nutrisnap_goals_v1',
-  SUBSCRIPTION: 'nutrisnap_sub_v1',
+  MEALS: 'calorietracker_meals_v1',
+  GOALS: 'calorietracker_goals_v1',
+  SUBSCRIPTION: 'calorietracker_sub_v1',
 };
 
 // Default daily targets

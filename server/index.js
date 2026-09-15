@@ -186,6 +186,52 @@ app.post('/api/create-checkout-session', async (req, res) => {
   }
 });
 
+// 3. Stripe Webhook Handler (Fulfilling Subscriptions)
+app.post('/api/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  let event;
+
+  try {
+    if (!endpointSecret) {
+      console.warn('⚠️ No STRIPE_WEBHOOK_SECRET found, skipping signature verification (NOT SAFE FOR PRODUCTION)');
+      event = req.body;
+    } else {
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    }
+  } catch (err) {
+    console.error(`⚠️ Webhook signature verification failed.`, err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'checkout.session.completed': {
+      const session = event.data.object;
+      console.log(`✅ Subscription created! Customer ID: ${session.customer}`);
+      // TODO: Update user database here to set isPro = true
+      break;
+    }
+    case 'invoice.payment_succeeded': {
+      const invoice = event.data.object;
+      console.log(`✅ Payment succeeded for invoice: ${invoice.id}`);
+      // TODO: Extend user subscription end date
+      break;
+    }
+    case 'customer.subscription.deleted': {
+      const subscription = event.data.object;
+      console.log(`❌ Subscription canceled for customer: ${subscription.customer}`);
+      // TODO: Downgrade user to free tier
+      break;
+    }
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  res.send();
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -194,6 +240,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🥗 Calorie Tracker Express Server running on http://localhost:${PORT}`);
-});
+// Start server only if not in a serverless environment
+if (process.env.NODE_ENV !== 'production' && !process.env.NETLIFY) {
+  app.listen(PORT, () => {
+    console.log(`Express Server running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
