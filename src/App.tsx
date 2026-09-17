@@ -62,11 +62,18 @@ export function App() {
       const updatedSub: UserSubscription = {
         isPro: true,
         scansRemaining: 999999,
-        plan: 'monthly',
+        endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
       };
       saveSubscription(updatedSub);
       setSubscription(updatedSub);
-      showToast('🎉 Subscription Active! Pro features unlocked.');
+      
+      // Tell Google Analytics that a sign up and purchase happened!
+      if (typeof (window as any).gtag === 'function') {
+        (window as any).gtag('event', 'sign_up', { method: 'Stripe' });
+        (window as any).gtag('event', 'purchase', { currency: 'USD', value: 4.99 });
+      }
+
+      showToast('Welcome to Premium! Your account has been upgraded.');
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
