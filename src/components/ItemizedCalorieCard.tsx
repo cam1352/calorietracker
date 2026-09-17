@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PlateAnalysisResult, FoodItem, MealEntry } from '../types';
-import { Sparkles, CheckCircle2, Flame, Dumbbell, Wheat, Droplet, Clock, Plus, Trash2, Edit2 } from 'lucide-react';
+import { Sparkles, CheckCircle2, Flame, Dumbbell, Wheat, Droplet, Clock, Plus, Trash2, Edit2, Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface ItemizedCalorieCardProps {
@@ -19,12 +19,47 @@ export const ItemizedCalorieCard: React.FC<ItemizedCalorieCardProps> = ({
   const [items, setItems] = useState<FoodItem[]>(result.items || []);
   const [mealType, setMealType] = useState<'Breakfast' | 'Lunch' | 'Dinner' | 'Snack'>('Lunch');
   const [saved, setSaved] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // Recalculate totals dynamically if user modifies item quantities
   const totalCalories = Math.round(items.reduce((acc, item) => acc + (Number(item.calories) || 0), 0));
   const totalProtein = Math.round(items.reduce((acc, item) => acc + (Number(item.protein) || 0), 0) * 10) / 10;
   const totalCarbs = Math.round(items.reduce((acc, item) => acc + (Number(item.carbs) || 0), 0) * 10) / 10;
   const totalFat = Math.round(items.reduce((acc, item) => acc + (Number(item.fat) || 0), 0) * 10) / 10;
+
+  const handlePlayAudio = () => {
+    if (!('speechSynthesis' in window)) {
+      alert("Your browser doesn't support Text-to-Speech.");
+      return;
+    }
+    
+    if (isPlaying) {
+      window.speechSynthesis.cancel();
+      setIsPlaying(false);
+      return;
+    }
+
+    // Determine the main foods listed
+    const foodNames = items.map(i => i.name).join(' and ');
+    const speechText = `I have scanned your plate. It contains ${foodNames}. This is approximately ${totalCalories} calories, with ${totalProtein} grams of protein.`;
+    
+    const utterance = new SpeechSynthesisUtterance(speechText);
+    utterance.pitch = 1.1;
+    utterance.rate = 1.0;
+    
+    utterance.onstart = () => setIsPlaying(true);
+    utterance.onend = () => setIsPlaying(false);
+    utterance.onerror = () => setIsPlaying(false);
+    
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Clean up audio on unmount
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
 
   const handleSave = () => {
     const mealEntry: MealEntry = {
@@ -82,21 +117,37 @@ export const ItemizedCalorieCard: React.FC<ItemizedCalorieCardProps> = ({
 
           {/* Dish Details */}
           <div className="md:col-span-7 space-y-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-                  AI Plate Analysis
-                </span>
-                {result.dietaryTags?.map((tag, i) => (
-                  <span key={i} className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700">
-                    {tag}
-                  </span>
-                ))}
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                      AI Plate Analysis
+                    </span>
+                    {result.dietaryTags?.map((tag, i) => (
+                      <span key={i} className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {/* Voice Button */}
+                  <button 
+                    onClick={handlePlayAudio}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md ${
+                      isPlaying 
+                        ? 'bg-rose-500 text-white animate-pulse' 
+                        : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                    }`}
+                  >
+                    {isPlaying ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    {isPlaying ? 'Stop Audio' : 'Read Aloud'}
+                  </button>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                  {result.dishName}
+                </h2>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                {result.dishName}
-              </h2>
-            </div>
 
             {/* AI Explanation Box */}
             <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-300 text-sm leading-relaxed">
