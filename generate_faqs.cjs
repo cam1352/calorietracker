@@ -2,7 +2,18 @@ const fs = require('fs');
 
 const foods = [
   "Pizza", "Pasta", "Rice", "Chicken", "Beef", "Salmon", "Eggs", "Avocado", "Almonds", "Oatmeal",
-  "Peanut Butter", "Protein Shakes", "Bananas", "Apples", "Potatoes", "Cheese", "Milk", "Yogurt", "Beans", "Bread"
+  "Peanut Butter", "Protein Shakes", "Bananas", "Apples", "Potatoes", "Cheese", "Milk", "Yogurt", "Beans", "Bread",
+  "Tofu", "Lentils", "Quinoa", "Sweet Potato", "Broccoli", "Spinach", "Kale", "Pork Chops", "Turkey", "Ground Beef",
+  "Tuna", "Shrimp", "Cottage Cheese", "Greek Yogurt", "Hummus", "Olive Oil", "Coconut Oil", "Butter", "Bacon", "Sausage",
+  "Cereal", "Pancakes", "Waffles", "Bagels", "Croissants", "Muffins", "Donuts", "Ice Cream", "Chocolate", "Cookies",
+  "Cake", "Pie", "Brownies", "Chips", "Popcorn", "Pretzels", "Crackers", "Granola Bars", "Protein Bars", "Smoothies",
+  "Juice", "Soda", "Beer", "Wine", "Liquor", "Coffee", "Tea", "Energy Drinks", "Sports Drinks", "Water",
+  "Salad", "Soup", "Sandwich", "Wrap", "Burger", "Hot Dog", "Taco", "Burrito", "Quesadilla", "Nachos",
+  "Sushi", "Ramen", "Pho", "Curry", "Stir Fry", "Fried Rice", "Noodles", "Dumplings", "Spring Rolls", "Egg Rolls",
+  "Mac and Cheese", "Lasagna", "Spaghetti", "Meatballs", "Chili", "Stew", "Roast Beef", "Ham", "Steak", "Ribs",
+  "Wings", "Chicken Nuggets", "French Fries", "Onion Rings", "Mozzarella Sticks", "Tater Tots", "Hash Browns", "Pancakes", "Waffles", "Crepes",
+  "Omelette", "Scrambled Eggs", "Fried Eggs", "Boiled Eggs", "Poached Eggs", "Deviled Eggs", "Egg Salad", "Chicken Salad", "Tuna Salad", "Potato Salad",
+  "Macaroni Salad", "Coleslaw", "Baked Beans", "Mashed Potatoes", "Roasted Potatoes", "Sweet Potato Fries", "Corn on the Cob", "Peas", "Carrots", "Green Beans"
 ];
 
 const diets = ["Keto", "Low-Carb", "Vegan", "Intermittent Fasting", "High-Protein"];
@@ -26,7 +37,7 @@ faqs.push(...generalFaqs.map(f => ({
   answer: f.a
 })));
 
-// Generate 80 programmatic long-tail keyword FAQs
+// Generate 500 programmatic long-tail keyword FAQs
 for (let i = 0; i < foods.length; i++) {
   const food = foods[i];
   
@@ -59,6 +70,15 @@ for (let i = 0; i < foods.length; i++) {
   });
 }
 
+// Add safe daily drip schedule (5 per day) to avoid Google Sandbox
+let startDate = new Date('2026-09-17T00:00:00Z');
+faqs.forEach((faq, index) => {
+  let dayOffset = Math.floor(index / 5);
+  let d = new Date(startDate.getTime());
+  d.setDate(d.getDate() + dayOffset);
+  faq.publishDate = d.toISOString();
+});
+
 // Write to file
 fs.writeFileSync('./src/data/faqs.json', JSON.stringify(faqs, null, 2), 'utf8');
-console.log(`✅ Successfully generated ${faqs.length} high-SEO FAQs!`);
+console.log(`✅ Successfully generated ${faqs.length} high-SEO FAQs on a safe drip schedule!`);

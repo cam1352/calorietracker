@@ -17,8 +17,31 @@ export const SEOArticle: React.FC<SEOArticleProps> = ({ type, data, onBack }) =>
         const plainText = data.content.replace(/<[^>]+>/g, '').substring(0, 155) + '...';
         metaDesc.setAttribute('content', plainText);
       }
+
+      // Inject JSON-LD FAQPage Schema for Google Rich Snippets
+      if (type === 'faq') {
+        let schemaScript = document.getElementById('faq-schema');
+        if (!schemaScript) {
+          schemaScript = document.createElement('script');
+          schemaScript.id = 'faq-schema';
+          schemaScript.setAttribute('type', 'application/ld+json');
+          document.head.appendChild(schemaScript);
+        }
+        schemaScript.textContent = JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": data.question || data.title,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": data.answer || data.content
+            }
+          }]
+        });
+      }
     }
-  }, [data]);
+  }, [data, type]);
 
   if (!data) return null;
 
