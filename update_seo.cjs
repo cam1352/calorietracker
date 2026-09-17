@@ -3,9 +3,9 @@ let blogs = JSON.parse(fs.readFileSync('src/data/blogs.json', 'utf8'));
 let startDate = new Date('2026-09-14T17:00:00Z');
 
 blogs.forEach((blog, index) => {
-  // 4 per day logic
-  let dayOffset = Math.floor(index / 4);
-  let hourOffset = (index % 4) * 4; // space them by 4 hours
+  // 8 per day logic (Accelerated SEO Strategy)
+  let dayOffset = Math.floor(index / 8);
+  let hourOffset = (index % 8) * 3; // space them by 3 hours
   let d = new Date(startDate.getTime());
   d.setDate(d.getDate() + dayOffset);
   d.setHours(d.getHours() + hourOffset);
