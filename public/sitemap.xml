@@ -132,6 +132,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://calorietracker.xyz/?blog=5-myths-about-weight-loss-busted</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://calorietracker.xyz/?food=apple</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
