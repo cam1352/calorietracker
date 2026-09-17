@@ -20,6 +20,16 @@ export const SEOFood: React.FC<SEOFoodProps> = ({ foodSlug, onClose }) => {
   useEffect(() => {
     document.title = `Calories in ${foodName} | AI Macro Tracker`;
     
+    // Parse language from URL (e.g. /es/ or ?lang=es)
+    const urlPath = window.location.pathname;
+    const isSpanish = urlPath.includes('/es/') || window.location.search.includes('lang=es');
+    const lang = isSpanish ? 'es' : 'en';
+    
+    // High-ranking localized keywords
+    const keywords = isSpanish 
+      ? 'contador de calorias, calcular macros, dieta IA, nutrición, inteligencia artificial, perder peso' 
+      : 'calorie counter, macro tracker, AI diet planner, weight loss, food scanner, nutrition API';
+
     let metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
       metaDescription = document.createElement('meta');
@@ -28,11 +38,43 @@ export const SEOFood: React.FC<SEOFoodProps> = ({ foodSlug, onClose }) => {
     }
     metaDescription.setAttribute(
       'content',
-      `Find out exactly how many calories and macros are in ${foodName}. Stop guessing your macros and let Calorie Tracker's AI vision calculate it instantly.`
+      `Find out exactly how many calories and macros are in ${foodName}. Stop guessing your macros and let Calorie Tracker's AI vision calculate it instantly. Keywords: ${keywords}`
     );
+
+    // Google Maps Entity Stacking & Multi-Language Schema Trick
+    let scriptTag = document.querySelector('script#google-maps-seo');
+    if (!scriptTag) {
+      scriptTag = document.createElement('script');
+      scriptTag.id = 'google-maps-seo';
+      scriptTag.setAttribute('type', 'application/ld+json');
+      document.head.appendChild(scriptTag);
+    }
+
+    // This creates the closed loop between our webpage, language, and the local Google Map Entity
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": ["SoftwareApplication", "LocalBusiness"],
+      "name": "Calorie Tracker AI",
+      "applicationCategory": "HealthApplication",
+      "inLanguage": lang,
+      "url": `https://calorietracker.xyz/${lang}/food/${foodSlug}`,
+      "keywords": keywords,
+      "hasMap": `https://maps.google.com/?cid=9876543210123456789&hl=${lang}`, // The core trick!
+      "areaServed": [
+        { "@type": "Country", "name": isSpanish ? "Spain" : "United States" },
+        { "@type": "Country", "name": isSpanish ? "Mexico" : "Canada" }
+      ],
+      "description": `AI vision tool to calculate calories and macros for ${foodName}.`
+    };
+    scriptTag.textContent = JSON.stringify(schemaData);
     
     window.scrollTo(0, 0);
-  }, [foodName]);
+    
+    return () => {
+      // Cleanup on unmount
+      if (scriptTag) document.head.removeChild(scriptTag);
+    };
+  }, [foodName, foodSlug]);
 
   return (
     <div className="max-w-3xl mx-auto pb-24">

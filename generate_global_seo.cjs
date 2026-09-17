@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const DOMAIN = 'https://calorietracker.xyz';
-const LANGUAGES = ['en', 'es', 'fr', 'de', 'pt', 'it']; 
+const LANGUAGES = ['en', 'es', 'zh', 'hi', 'fr', 'pt']; 
 
 const blogs = JSON.parse(fs.readFileSync('./src/data/blogs.json', 'utf8'));
 const faqs = JSON.parse(fs.readFileSync('./src/data/faqs.json', 'utf8'));

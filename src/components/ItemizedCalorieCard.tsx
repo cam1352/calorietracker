@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PlateAnalysisResult, FoodItem, MealEntry } from '../types';
-import { Sparkles, CheckCircle2, Flame, Dumbbell, Wheat, Droplet, Clock, Plus, Trash2, Edit2, Volume2, VolumeX } from 'lucide-react';
+import { Sparkles, CheckCircle2, Flame, Dumbbell, Wheat, Droplet, Clock, Plus, Trash2, Edit2, Volume2, VolumeX, Share2, Download } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import html2canvas from 'html2canvas';
 
 interface ItemizedCalorieCardProps {
   result: PlateAnalysisResult;
@@ -20,6 +21,21 @@ export const ItemizedCalorieCard: React.FC<ItemizedCalorieCardProps> = ({
   const [mealType, setMealType] = useState<'Breakfast' | 'Lunch' | 'Dinner' | 'Snack'>('Lunch');
   const [saved, setSaved] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleExportSocial = async () => {
+    if (!cardRef.current) return;
+    try {
+      const canvas = await html2canvas(cardRef.current, { scale: 2, useCORS: true, backgroundColor: '#020617' });
+      const image = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = `CalorieTracker_${Date.now()}.png`;
+      link.click();
+    } catch (err) {
+      console.error('Export failed', err);
+    }
+  };
 
   // Recalculate totals dynamically if user modifies item quantities
   const totalCalories = Math.round(items.reduce((acc, item) => acc + (Number(item.calories) || 0), 0));
@@ -94,8 +110,16 @@ export const ItemizedCalorieCard: React.FC<ItemizedCalorieCardProps> = ({
   return (
     <div className="max-w-4xl mx-auto space-y-6 py-4 animate-fadeIn">
       {/* Top Banner & Dish Name */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 relative overflow-hidden shadow-2xl">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+      <div 
+        ref={cardRef}
+        className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 relative overflow-hidden shadow-2xl bg-slate-950"
+      >
+        {/* Watermark (Only visible when generated, managed by CSS if needed, or just rendered normally) */}
+        <div className="absolute top-4 right-4 text-emerald-500/30 font-black text-2xl tracking-tighter rotate-12 pointer-events-none select-none z-0">
+          CalorieTracker.xyz
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center relative z-10">
           
           {/* Image Thumbnail */}
           <div className="md:col-span-5 relative rounded-2xl overflow-hidden shadow-xl border border-slate-800 group">
@@ -130,18 +154,28 @@ export const ItemizedCalorieCard: React.FC<ItemizedCalorieCardProps> = ({
                     ))}
                   </div>
                   
-                  {/* Voice Button */}
-                  <button 
-                    onClick={handlePlayAudio}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md ${
-                      isPlaying 
-                        ? 'bg-rose-500 text-white animate-pulse' 
-                        : 'bg-indigo-600 hover:bg-indigo-500 text-white'
-                    }`}
-                  >
-                    {isPlaying ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                    {isPlaying ? 'Stop Audio' : 'Read Aloud'}
-                  </button>
+                  {/* Button Group */}
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={handleExportSocial}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md bg-emerald-600 hover:bg-emerald-500 text-slate-900"
+                    >
+                      <Share2 className="w-3.5 h-3.5" />
+                      Save to Camera Roll
+                    </button>
+
+                    <button 
+                      onClick={handlePlayAudio}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md ${
+                        isPlaying 
+                          ? 'bg-rose-500 text-white animate-pulse' 
+                          : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                      }`}
+                    >
+                      {isPlaying ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                      {isPlaying ? 'Stop Audio' : 'Read Aloud'}
+                    </button>
+                  </div>
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
