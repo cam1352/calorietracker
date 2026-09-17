@@ -8,8 +8,10 @@ import { PricingModal } from './components/PricingModal';
 import { AuthModal } from './components/AuthModal';
 import { SEOArticle } from './components/SEOArticle';
 import { SEOIndex } from './components/SEOIndex';
+import { SEOFood } from './components/SEOFood';
 import faqsData from './data/faqs.json';
 import blogsData from './data/blogs.json';
+import foodsData from './data/foods.json';
 import { PlateAnalysisResult, MealEntry, UserGoals, UserSubscription } from './types';
 import {
   getStoredMeals,
@@ -25,16 +27,18 @@ import { CheckCircle2, Camera } from 'lucide-react';
 export function App() {
   const [activeTab, setActiveTab] = useState<'scan' | 'daily' | 'analytics' | 'seo'>(() => {
     const params = new URLSearchParams(window.location.search);
-    return (params.has('blog') || params.has('faq')) ? 'seo' : 'scan';
+    return (params.has('blog') || params.has('faq') || params.has('food')) ? 'seo' : 'scan';
   });
   const [seoData, setSeoData] = useState<any>(() => {
     const params = new URLSearchParams(window.location.search);
+    if (params.has('food')) return params.get('food'); // Just store the slug string
     if (params.has('blog')) return blogsData.find(b => b.slug === params.get('blog'));
     if (params.has('faq')) return faqsData.find(f => f.slug === params.get('faq'));
     return null;
   });
-  const [seoType, setSeoType] = useState<'blog' | 'faq'>(() => {
+  const [seoType, setSeoType] = useState<'blog' | 'faq' | 'food'>(() => {
     const params = new URLSearchParams(window.location.search);
+    if (params.has('food')) return 'food';
     return params.has('faq') ? 'faq' : 'blog';
   });
   const [meals, setMeals] = useState<MealEntry[]>([]);
@@ -184,9 +188,21 @@ export function App() {
           <AnalyticsDashboard meals={meals} goals={goals} />
         )}
       
-        {activeTab === 'seo' && seoData && (
+        {activeTab === 'seo' && seoData && seoType === 'food' && (
+          <SEOFood 
+            foodSlug={seoData} 
+            onClose={() => {
+              setActiveTab('scan');
+              setSeoData(null);
+              window.history.replaceState({}, document.title, window.location.pathname);
+              window.scrollTo(0, 0);
+            }} 
+          />
+        )}
+        
+        {activeTab === 'seo' && seoData && seoType !== 'food' && (
           <SEOArticle 
-            type={seoType} 
+            type={seoType as 'blog' | 'faq'} 
             data={seoData} 
             onBack={() => {
               setSeoData(null);

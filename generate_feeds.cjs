@@ -43,9 +43,35 @@ publishedFaqs.forEach(faq => {
   </url>\n`;
 });
 
+// --- PROGRAMMATIC SEO (FOODS) ---
+const popularFoods = [
+  "apple", "banana", "chicken-breast", "salmon", "egg", "avocado", "almonds", 
+  "brown-rice", "sweet-potato", "broccoli", "spinach", "greek-yogurt", "oatmeal", 
+  "peanut-butter", "steak", "tuna", "blueberries", "strawberries", "watermelon", 
+  "pineapple", "mango", "peach", "orange", "grapefruit", "grapes", "carrot", 
+  "cucumber", "tomato", "onion", "garlic", "bell-pepper", "mushroom", "zucchini", 
+  "cauliflower", "asparagus", "green-beans", "peas", "corn", "potato", "quinoa", 
+  "pasta", "bread", "cheese", "milk", "butter", "olive-oil", "coconut-oil", "honey", 
+  "maple-syrup", "sugar", "salt", "pepper", "ketchup", "mustard", "mayonnaise", 
+  "soy-sauce", "hot-sauce", "salsa", "hummus", "guacamole", "pesto", "pizza", 
+  "burger", "hot-dog", "fries", "chips", "popcorn", "pretzel", "cracker", "cookie", 
+  "cake", "pie", "ice-cream", "chocolate", "candy", "gum", "soda", "juice", "coffee", 
+  "tea", "beer", "wine", "liquor", "cocktail", "water", "smoothie", "protein-shake", 
+  "salad", "soup", "sandwich", "wrap", "taco", "burrito", "quesadilla", "nachos", 
+  "sushi", "ramen", "pho", "curry", "stir-fry", "cereal"
+];
+
+popularFoods.forEach(food => {
+  sitemapXML += `  <url>
+    <loc>${DOMAIN}/?food=${food}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>\n`;
+});
+
 sitemapXML += `</urlset>`;
 fs.writeFileSync('./public/sitemap.xml', sitemapXML, 'utf8');
-console.log('✅ sitemap.xml generated');
+console.log('✅ sitemap.xml generated with pSEO Food routes');
 
 
 // 2. Generate RSS Feed XML
