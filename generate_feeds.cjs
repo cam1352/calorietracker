@@ -6,10 +6,10 @@ const DOMAIN = 'https://calorietracker.xyz';
 const blogs = JSON.parse(fs.readFileSync('./src/data/blogs.json', 'utf8'));
 const faqs = JSON.parse(fs.readFileSync('./src/data/faqs.json', 'utf8'));
 
-// Only include published posts
+// Only include published blog posts
 const now = new Date();
 const publishedBlogs = blogs.filter(b => new Date(b.publishDate) <= now);
-const publishedFaqs = faqs.filter(f => new Date(f.publishDate) <= now);
+const publishedFaqs = faqs; // FAQs are instantly published
 
 console.log(`Generating feeds for ${publishedBlogs.length} blogs and ${publishedFaqs.length} FAQs...`);
 
@@ -20,8 +20,7 @@ let sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>
     <loc>${DOMAIN}/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-  </url>
-`;
+  </url>\n`;
 
 // Add Blogs to Sitemap
 publishedBlogs.forEach(blog => {
@@ -37,9 +36,8 @@ publishedBlogs.forEach(blog => {
 publishedFaqs.forEach(faq => {
   sitemapXML += `  <url>
     <loc>${DOMAIN}/?faq=${faq.slug}</loc>
-    <lastmod>${new Date(faq.publishDate).toISOString().split('T')[0]}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>\n`;
 });
 
