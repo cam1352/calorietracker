@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Camera, Upload, Sparkles, AlertCircle, RefreshCw } from 'lucide-react';
 import { PlateAnalysisResult } from '../types';
 
@@ -15,6 +16,7 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
   isPro,
   onOpenPricing,
 }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -165,18 +167,20 @@ export const PlateScanner: React.FC<PlateScannerProps> = ({
         {/* Background ambient glow */}
         <div className="absolute -top-24 -left-24 w-60 h-60 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-60 h-60 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-24 -left-24 w-60 h-60 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -right-24 w-60 h-60 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="text-center max-w-xl mx-auto mb-8 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 mb-2">
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI Calorie Estimation & Plate Reader</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Snap & Read Food Plate
-          </h2>
-          <p className="text-slate-400 text-sm">
-            Reads itemized calories (e.g. Corn 250 kcal, Potatoes 400 kcal, Meat 500 kcal = 1,150 total kcal) with exact timestamp logging.
-          </p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              {t('hero_title')}
+            </h2>
+            <p className="text-slate-400 text-sm">
+              {t('hero_desc')}
+            </p>
         </div>
 
         {error && (
