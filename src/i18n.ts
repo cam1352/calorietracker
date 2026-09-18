@@ -54,11 +54,16 @@ const resources = {
   }
 };
 
+// Parse the language directly from the URL path to ensure the UI changes instantly
+const currentPathLang = window.location.pathname.split('/')[1];
+const initialLang = ['en', 'es', 'zh', 'hi', 'fr', 'pt'].includes(currentPathLang) ? currentPathLang : 'en';
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
+    lng: initialLang, // Force the language based on the URL
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false
