@@ -1,5 +1,6 @@
 import React from 'react';
-import { Camera, BarChart3, Calendar, Crown, Zap, UserCheck, LogIn, LogOut } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Camera, BarChart3, Calendar, Crown, Zap, UserCheck, LogIn, LogOut, Globe } from 'lucide-react';
 import { UserSubscription } from '../types';
 
 interface HeaderProps {
@@ -21,6 +22,19 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAuth,
   onLogout,
 }) => {
+  const { t } = useTranslation();
+  const currentLang = window.location.pathname.split('/')[1];
+  const activeLang = ['en', 'es', 'zh', 'hi', 'fr', 'pt'].includes(currentLang) ? currentLang : 'en';
+
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const lang = e.target.value;
+    if (lang === 'en') {
+      window.location.href = '/';
+    } else {
+      window.location.href = `/${lang}/`;
+    }
+  };
+
   return (
     <header className="sticky top-0 z-40 glass-panel border-b border-slate-800 bg-slate-900/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,40 +59,58 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Nav Tabs */}
           <nav className="flex items-center gap-1 sm:gap-2 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800/80">
+            {/* Language Selector */}
+            <div className="relative flex items-center bg-slate-800 rounded-lg border border-slate-700 hover:bg-slate-700 transition-colors mr-1">
+              <Globe className="w-3.5 h-3.5 text-slate-400 absolute left-2 pointer-events-none" />
+              <select 
+                value={activeLang}
+                onChange={handleLanguageChange}
+                className="appearance-none bg-transparent pl-7 pr-6 py-1.5 text-xs font-semibold text-slate-200 outline-none cursor-pointer"
+              >
+                <option value="en">EN</option>
+                <option value="es">ES</option>
+                <option value="zh">ZH</option>
+                <option value="hi">HI</option>
+                <option value="fr">FR</option>
+                <option value="pt">PT</option>
+              </select>
+            </div>
+
             <button
               onClick={() => setActiveTab('scan')}
               className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === 'scan'
-                  ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                activeTab === 'scan' ? 'bg-emerald-500/20 text-emerald-400 shadow-sm' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               <Camera className="w-4 h-4" />
-              <span className="hidden sm:inline">Scan Plate</span>
+              <span className="hidden sm:inline">{t('scan')}</span>
             </button>
-
             <button
               onClick={() => setActiveTab('daily')}
               className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === 'daily'
-                  ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                activeTab === 'daily' ? 'bg-indigo-500/20 text-indigo-400 shadow-sm' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               <Calendar className="w-4 h-4" />
-              <span className="hidden sm:inline">Daily Log</span>
+              <span className="hidden sm:inline">{t('daily')}</span>
             </button>
-
             <button
               onClick={() => setActiveTab('analytics')}
               className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === 'analytics'
-                  ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                activeTab === 'analytics' ? 'bg-blue-500/20 text-blue-400 shadow-sm' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               <BarChart3 className="w-4 h-4" />
-              <span className="hidden sm:inline">Week & Month</span>
+              <span className="hidden sm:inline">{t('analytics')}</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('seo')}
+              className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                activeTab === 'seo' ? 'bg-rose-500/20 text-rose-400 shadow-sm' : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Zap className="w-4 h-4" />
+              <span className="hidden sm:inline">{t('seo')}</span>
             </button>
           </nav>
 
@@ -102,17 +134,17 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={onOpenAuth}
                 className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-all"
-                title="Sign In"
+                title={t('sign_in')}
               >
                 <LogIn className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="hidden sm:inline">Sign In</span>
+                <span className="hidden sm:inline">{t('sign_in')}</span>
               </button>
             )}
 
             {subscription.isPro ? (
               <div className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/30 text-amber-300 text-xs font-semibold">
                 <Crown className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                <span className="hidden sm:inline">Pro</span>
+                <span className="hidden sm:inline">{t('pro')}</span>
               </div>
             ) : (
               <button
