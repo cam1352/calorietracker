@@ -1,11 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { ArrowLeft, BookOpen, HelpCircle } from 'lucide-react';
 import faqsData from '../data/faqs.json';
 import blogsData from '../data/blogs.json';
 
 interface SEOIndexProps {
-  type: 'blog' | 'faq';
-  onSelect: (item: any, type: 'blog' | 'faq') => void;
+  type: 'blog' | 'faq' | 'food';
+  onSelect: (item: any, type: 'blog' | 'faq' | 'food') => void;
   onBack: () => void;
 }
 

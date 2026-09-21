@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { PlateScanner } from './components/PlateScanner';
 import { ItemizedCalorieCard } from './components/ItemizedCalorieCard';
@@ -65,8 +65,9 @@ export function App() {
     if (urlParams.get('payment') === 'success') {
       const updatedSub: UserSubscription = {
         isPro: true,
+          plan: 'monthly',
         scansRemaining: 999999,
-        endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        renewalDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
       };
       saveSubscription(updatedSub);
       setSubscription(updatedSub);
