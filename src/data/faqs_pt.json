@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "how-accurate-is-ai-calorie-tracking",
+    "question": "Quão preciso é o rastreamento de calorias da IA?",
+    "answer": "O rastreamento de calorias por IA usa visão computacional avançada para estimar o tamanho das porções e identificar ingredientes com até 90% de precisão, tornando-o muito superior à adivinhação manual.",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "do-i-need-to-weigh-my-food-with-ai-tracking",
+    "question": "Preciso pesar os meus alimentos com o rastreamento de IA?",
+    "answer": "Não! A IA analisa o tamanho relativo do alimento na foto para estimar gramas e onças, eliminando a necessidade de uma balança digital de alimentos.",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "can-the-ai-track-mixed-meals-like-casseroles",
+    "question": "A IA pode rastrear refeições mistas como caçarolas?",
+    "answer": "Sim, nosso Gemini Vision AI é treinado para identificar refeições mistas complexas, ensopados e saladas, reconhecendo ingredientes individuais visíveis.",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "how-do-i-track-restaurant-meals",
+    "question": "Como faço para acompanhar as refeições do restaurante?",
+    "answer": "Basta tirar uma foto do prato do seu restaurante. A IA compara os dados visuais com milhares de tamanhos de porções de restaurantes conhecidos para fornecer uma análise macro precisa.",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "what-is-a-calorie-deficit",
+    "question": "O que é um déficit calórico?",
+    "answer": "Um déficit calórico ocorre quando você consome menos calorias do que o seu corpo queima. É o único método cientificamente comprovado para perda de gordura.",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  }
+]

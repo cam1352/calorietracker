@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "how-accurate-is-ai-calorie-tracking",
+    "question": "人工智能卡路里跟踪的准确性如何？",
+    "answer": "人工智能卡路里跟踪使用先进的计算机视觉来估计份量并识别成分，准确率高达90% ，远远优于手动猜测。",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "do-i-need-to-weigh-my-food-with-ai-tracking",
+    "question": "我需要使用AI跟踪来称重食物吗？",
+    "answer": "不！人工智能会分析照片中食物的相对大小，以估计克数和盎司，从而消除了对数字食物秤的需求。",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "can-the-ai-track-mixed-meals-like-casseroles",
+    "question": "人工智能可以像砂锅菜一样跟踪混合膳食吗？",
+    "answer": "是的，我们的Gemini Vision AI经过培训，通过识别单个可见的成分来识别复杂的混合餐、炖菜和沙拉。",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "how-do-i-track-restaurant-meals",
+    "question": "如何追踪餐厅餐点？",
+    "answer": "只需为餐厅餐点拍照即可。人工智能将视觉数据与成千上万的已知餐厅份量进行比较，为您提供准确的宏观细分。",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "slug": "what-is-a-calorie-deficit",
+    "question": "什么是卡路里短缺？",
+    "answer": "当您消耗的卡路里少于身体燃烧的卡路里时，就会出现卡路里不足。这是唯一经过科学验证的减肥方法。",
+    "publishDate": "2026-09-17T00:00:00.000Z"
+  }
+]
