@@ -1,9 +1,9 @@
-import { MealEntry, UserGoals, UserSubscription } from '../types';
+﻿import { MealEntry, UserGoals, UserSubscription } from '../types';
 
 const STORAGE_KEYS = {
   MEALS: 'calorietracker_meals_v1',
   GOALS: 'calorietracker_goals_v1',
-  SUBSCRIPTION: 'calorietracker_sub_v1',
+  SUBSCRIPTION: 'calorietracker_sub_v2',
 };
 
 // Default daily targets
