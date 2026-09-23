@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { Camera, ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 
 interface SEOFoodProps {
@@ -27,7 +27,7 @@ export const SEOFood: React.FC<SEOFoodProps> = ({ foodSlug, onClose }) => {
     
     // High-ranking localized keywords
     const keywords = isSpanish 
-      ? 'contador de calorias, calcular macros, dieta IA, nutrición, inteligencia artificial, perder peso' 
+      ? 'contador de calorias, calcular macros, dieta IA, nutriciÃ³n, inteligencia artificial, perder peso' 
       : 'calorie counter, macro tracker, AI diet planner, weight loss, food scanner, nutrition API';
 
     let metaDescription = document.querySelector('meta[name="description"]');
@@ -53,7 +53,7 @@ export const SEOFood: React.FC<SEOFoodProps> = ({ foodSlug, onClose }) => {
     // This creates the closed loop between our webpage, language, and the local Google Map Entity
     const schemaData = {
       "@context": "https://schema.org",
-      "@type": ["SoftwareApplication", "LocalBusiness"],
+      "@type": "SoftwareApplication",
       "name": "Calorie Tracker AI",
       "applicationCategory": "HealthApplication",
       "inLanguage": lang,
