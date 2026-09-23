@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "calorie-tracker",
   "private": true,
   "version": "1.0.0",
@@ -7,7 +7,7 @@
     "dev": "vite",
     "server": "node server/index.js",
     "start": "concurrently \"npm run server\" \"npm run dev\"",
-    "build": "node generate_feeds.cjs && node generate_global_seo.cjs && tsc && vite build",
+    "build": "node generate_feeds.cjs && node generate_global_seo.cjs && vite build",
     "postbuild": "react-snap",
     "lint": "tsc --noEmit",
     "preview": "vite preview"
