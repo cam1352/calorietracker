@@ -1,7 +1,7 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { PlateScanner } from './components/PlateScanner';
-import { DailyDiary } from './components/DailyDiary';
+import { DailyTracker as DailyDiary } from './components/DailyTracker';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { PricingModal } from './components/PricingModal';
 import { AuthModal } from './components/AuthModal';
@@ -265,6 +265,26 @@ export function App() {
         />
       )}
 
+
+      <footer className="mt-auto py-12 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 text-center sm:text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h4 className="font-bold text-slate-800 mb-4">NutriSnap AI</h4>
+              <p className="text-sm text-slate-500">&copy; {new Date().getFullYear()} All rights reserved.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-slate-800 mb-4 uppercase text-xs tracking-wider">Our Network</h4>
+              <ul className="space-y-2 text-sm text-slate-500">
+                <li><a href="https://mailorderpharmacy.io" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Mail Order Pharmacy</a></li>
+                <li><a href="https://pharmacycalgary.ca" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Calgary Pharmacy</a></li>
+                <li><a href="https://pharmacytoronto.ca" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Toronto Pharmacy</a></li>
+                <li><a href="https://pharmacyvancouver.ca" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Vancouver Pharmacy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
       <Toast message={toast.message} isVisible={toast.isVisible} />
     </div>
   );
