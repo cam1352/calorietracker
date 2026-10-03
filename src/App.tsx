@@ -9,7 +9,7 @@ import { SEOArticle } from './components/SEOArticle';
 import { SEOIndex } from './components/SEOIndex';
 import { SEOFood } from './components/SEOFood';
 import { PlateAnalysisResult, MealEntry, UserGoals, UserSubscription } from './types';
-import { getStoredMeals, saveMeal, deleteMeal, getGoals, getSubscription, saveSubscription } from './utils/storage';
+import { getStoredMeals, saveMeal, deleteMeal, getStoredGoals as getGoals, getStoredSubscription as getSubscription, saveSubscription } from './utils/storage';
 import { Toast } from './components/Toast';
 
 // Dynamically load language databases
