@@ -8,7 +8,6 @@
     "server": "node server/index.js",
     "start": "concurrently \"npm run server\" \"npm run dev\"",
     "build": "node generate_feeds.cjs && node generate_global_seo.cjs && vite build",
-    "postbuild": "react-snap",
     "lint": "tsc --noEmit",
     "preview": "vite preview"
   },
