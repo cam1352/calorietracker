@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://calorietracker.xyz/sitemap.xml
+Sitemap: https://calorietracker.xyz/sitemap_global.xml

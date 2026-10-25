@@ -7,9 +7,10 @@ const blogs = JSON.parse(fs.readFileSync('./src/data/blogs.json', 'utf8'));
 const faqs = JSON.parse(fs.readFileSync('./src/data/faqs.json', 'utf8'));
 
 // Only include published blog posts and dripped FAQs
+// Only include published blog posts and all FAQs
 const now = new Date();
-const publishedBlogs = blogs.filter(b => new Date(b.publishDate) <= now);
-const publishedFaqs = faqs.filter(f => new Date(f.publishDate) <= now);
+const publishedBlogs = blogs.filter(b => !b.publishDate || new Date(b.publishDate) <= now);
+const publishedFaqs = faqs.filter(f => !f.publishDate || new Date(f.publishDate) <= now);
 
 console.log(`Generating feeds for ${publishedBlogs.length} blogs and ${publishedFaqs.length} FAQs...`);
 
@@ -24,9 +25,10 @@ let sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>
 
 // Add Blogs to Sitemap
 publishedBlogs.forEach(blog => {
+  const dateStr = blog.publishDate ? new Date(blog.publishDate).toISOString().split('T')[0] : '2026-10-25';
   sitemapXML += `  <url>
     <loc>${DOMAIN}/?blog=${blog.slug}</loc>
-    <lastmod>${new Date(blog.publishDate).toISOString().split('T')[0]}</lastmod>
+    <lastmod>${dateStr}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>\n`;
@@ -34,9 +36,10 @@ publishedBlogs.forEach(blog => {
 
 // Add FAQs to Sitemap
 publishedFaqs.forEach(faq => {
+  const dateStr = faq.publishDate ? new Date(faq.publishDate).toISOString().split('T')[0] : '2026-10-25';
   sitemapXML += `  <url>
     <loc>${DOMAIN}/?faq=${faq.slug}</loc>
-    <lastmod>${new Date(faq.publishDate).toISOString().split('T')[0]}</lastmod>
+    <lastmod>${dateStr}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>\n`;
