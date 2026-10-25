@@ -1,5 +1,35 @@
 [
   {
+    "slug": "calorie-tracker-faq-free-is-there-a-100-free-ai-calorie-counter",
+    "question": "Calorie tracker faq free: Is there a 100% free AI calorie counter?",
+    "answer": "Yes! Calorie Tracker provides free instant AI photo scans for all users. You can snap a picture of any meal plate, and our multimodal AI model will immediately estimate itemized calories, protein, carbohydrates, and fats without requiring a paid subscription or entering credit card details."
+  },
+  {
+    "slug": "how-to-count-calories-in-food-accurately-without-a-scale",
+    "question": "How to count calories in food accurately without a scale?",
+    "answer": "To count calories in food accurately without a scale, computer vision AI analyzes the geometric depth, surface area, and ingredient composition of your meal relative to standard plate dimensions. Clinical research indicates that while humans routinely underestimate calories by 30% to 50% through manual guessing, AI computer vision achieves up to 94% precision by cross-referencing visual food textures against verified biochemical nutrient databases."
+  },
+  {
+    "slug": "food-calorie-tracker-faq-how-does-ai-identify-mixed-ingredients",
+    "question": "Food calorie tracker faq: How does AI identify mixed ingredients?",
+    "answer": "Our AI food scanner utilizes semantic segmentation neural networks. When you take a picture of a mixed meal (such as a stir-fry, burrito bowl, or salad), the AI breaks the image into discrete visual clusters, identifying individual ingredients—such as chicken breast, avocado, olive oil dressing, and white rice—and computing each item's individual caloric contribution."
+  },
+  {
+    "slug": "how-to-count-calories-for-weight-loss-step-by-step-clinical-method",
+    "question": "How to count calories for weight loss: Step-by-step clinical method",
+    "answer": "To count calories for sustainable weight loss: \n1. Determine your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE) using the Mifflin-St Jeor formula.\n2. Establish a moderate 15% to 25% caloric deficit (typically 300 to 500 kcal below maintenance).\n3. Prioritize high dietary protein (1.6g to 2.2g per kg of body weight) to stimulate muscle protein synthesis and prevent lean tissue catabolism.\n4. Log every meal consistently—including cooking oils, sauces, and beverages. Using an AI camera meal tracker removes logging friction, ensuring you maintain 100% consistency throughout your weight loss journey."
+  },
+  {
+    "slug": "how-to-count-calories-calculator-how-does-tdee-calculation-work",
+    "question": "How to count calories calculator: How does TDEE calculation work?",
+    "answer": "A caloric needs calculator operates by computing your basal metabolic requirements and multiplying it by an activity factor (NEAT + EAT). For example, a 175-lb moderately active individual has a baseline TDEE of approximately 2,400 calories. Subtracting 500 calories per day establishes an energetic target of 1,900 calories, which yields roughly 1 pound of pure adipose loss per week."
+  },
+  {
+    "slug": "how-to-track-calories-for-weight-gain-and-lean-muscle-hypertrophy",
+    "question": "How to track calories for weight gain and lean muscle hypertrophy",
+    "answer": "To track calories for lean muscle gain (hypertrophy) without excessive adipose accumulation:\n1. Target a controlled caloric surplus of 5% to 10% above your maintenance TDEE (approximately 200 to 300 surplus calories per day).\n2. Consume at least 2.0g of protein per kilogram of body weight to keep the mTOR pathway saturated with essential amino acids like leucine.\n3. Allocate remaining calories toward complex carbohydrates (oats, rice, sweet potatoes) to maximize intramuscular glycogen stores during heavy resistance training.\n4. Use an AI calorie scanner to verify you hit your daily caloric floor every evening."
+  },
+  {
     "slug": "what-happens-if-i-eat-1200-calories-and-burn-500",
     "question": "What happens if I eat 1200 calories and burn 500?",
     "answer": "When you consume 1,200 calories and burn 500 active exercise calories on top of your basal metabolic rate (BMR), your net caloric intake drops to 700 calories. For most adults whose average BMR is between 1,400 and 1,800 calories, this creates a severe daily caloric deficit of 1,200 to 1,600 calories. \n\nWhile this triggers rapid initial weight loss, prolonged restriction below your resting metabolic minimum forces your body into adaptive thermogenesis—commonly known as metabolic slowdown. Your thyroid downregulates triiodothyronine (T3), leptin levels collapse causing intense biological hunger, and your body begins catabolizing lean muscle tissue alongside adipose tissue. \n\nTo maintain healthy metabolic function, clinical nutritionists recommend calculating your Total Daily Energy Expenditure (TDEE) and targeting a sustainable 300 to 500 calorie deficit. Utilizing an AI visual calorie tracker ensures you maintain adequate essential amino acids (at least 1.6g to 2.2g of protein per kilogram of target body weight) to spare lean mass while sustaining fat oxidation."
