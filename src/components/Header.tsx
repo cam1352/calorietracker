@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Camera, BarChart3, Calendar, Crown, Zap, UserCheck, LogIn, LogOut, Globe } from 'lucide-react';
+import { Camera, BarChart3, Calendar, Crown, Zap, UserCheck, LogIn, LogOut, Globe, BookOpen } from 'lucide-react';
 import { UserSubscription } from '../types';
 
 interface HeaderProps {
@@ -109,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
                 activeTab === 'seo' ? 'bg-rose-500/20 text-rose-400 shadow-sm' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <Zap className="w-4 h-4" />
+              <BookOpen className="w-4 h-4" />
               <span className="hidden sm:inline">{t('seo')}</span>
             </button>
           </nav>

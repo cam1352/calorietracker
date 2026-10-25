@@ -275,20 +275,35 @@ export function App() {
       )}
 
 
-      <footer className="mt-auto py-12 border-t border-slate-200">
+      <footer className="mt-auto py-12 border-t border-slate-800 bg-slate-950/40">
         <div className="max-w-7xl mx-auto px-4 text-center sm:text-left">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h4 className="font-bold text-slate-800 mb-4">NutriSnap AI</h4>
-              <p className="text-sm text-slate-500">&copy; {new Date().getFullYear()} All rights reserved.</p>
+              <h4 className="font-bold text-white mb-2">Calorie Tracker</h4>
+              <p className="text-sm text-slate-400">AI-powered calorie counting and instant food macro scanner.</p>
+              <p className="text-xs text-slate-500 mt-4">&copy; {new Date().getFullYear()} CalorieTracker.xyz. All rights reserved.</p>
             </div>
             <div>
-              <h4 className="font-bold text-slate-800 mb-4 uppercase text-xs tracking-wider">Our Network</h4>
-              <ul className="space-y-2 text-sm text-slate-500">
-                <li><a href="https://mailorderpharmacy.io" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Mail Order Pharmacy</a></li>
-                <li><a href="https://pharmacycalgary.ca" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Calgary Pharmacy</a></li>
-                <li><a href="https://pharmacytoronto.ca" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Toronto Pharmacy</a></li>
-                <li><a href="https://pharmacyvancouver.ca" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Vancouver Pharmacy</a></li>
+              <h4 className="font-bold text-white mb-3 uppercase text-xs tracking-wider">Explore</h4>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li>
+                  <button onClick={() => { setActiveTab('seo'); setSeoType('blog'); setSeoData(null); window.scrollTo(0, 0); }} className="hover:text-emerald-400 transition-colors">
+                    Clinical Guides & Articles
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => { setActiveTab('seo'); setSeoType('faq'); setSeoData(null); window.scrollTo(0, 0); }} className="hover:text-emerald-400 transition-colors">
+                    Calorie & Macro FAQs
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-white mb-3 uppercase text-xs tracking-wider">Features</h4>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li><button onClick={() => { setActiveTab('scan'); window.scrollTo(0, 0); }} className="hover:text-emerald-400 transition-colors">AI Meal Scanner</button></li>
+                <li><button onClick={() => { setActiveTab('daily'); window.scrollTo(0, 0); }} className="hover:text-emerald-400 transition-colors">Daily Log & Diary</button></li>
+                <li><button onClick={() => { setActiveTab('analytics'); window.scrollTo(0, 0); }} className="hover:text-emerald-400 transition-colors">Macro Analytics</button></li>
               </ul>
             </div>
           </div>
