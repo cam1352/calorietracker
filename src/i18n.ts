@@ -13,8 +13,8 @@ const resources = {
       "seo": "SEO Engine",
       "sign_in": "Sign In",
       "pro": "Pro",
-      "hero_title": "Snap & Read Food Plate",
-      "hero_desc": "Reads itemized calories (e.g. Corn 250 kcal, Potatoes 400 kcal, Meat 500 kcal = 1,150 total kcal) with exact timestamp logging."
+      "hero_title": "AI Calorie Counter & Instant Macro Food Scanner",
+      "hero_desc": "Snap a photo of your meal to calculate exact calories, protein, carbs, and fat in under 2 seconds. Itemized plate breakdown with 94% clinical accuracy."
     }
   },
   es: {
