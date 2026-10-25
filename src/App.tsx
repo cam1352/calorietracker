@@ -12,27 +12,36 @@ import { PlateAnalysisResult, MealEntry, UserGoals, UserSubscription } from './t
 import { getStoredMeals, saveMeal, deleteMeal, getStoredGoals as getGoals, getStoredSubscription as getSubscription, saveSubscription } from './utils/storage';
 import { Toast } from './components/Toast';
 
+import blogsEn from './data/blogs.json';
+import blogsFr from './data/blogs_fr.json';
+import blogsEs from './data/blogs_es.json';
+import blogsZh from './data/blogs_zh.json';
+import blogsHi from './data/blogs_hi.json';
+import blogsPt from './data/blogs_pt.json';
+
+import faqsEn from './data/faqs.json';
+import faqsFr from './data/faqs_fr.json';
+import faqsEs from './data/faqs_es.json';
+import faqsZh from './data/faqs_zh.json';
+import faqsHi from './data/faqs_hi.json';
+import faqsPt from './data/faqs_pt.json';
+
 // Dynamically load language databases
 const loadDB = (type: 'blog' | 'faq', lang: string) => {
-  const code = lang === 'zh' ? 'zh' : lang; // ensure fallback
-  try {
-    if (type === 'blog') {
-      if (lang === 'fr') return require('./data/blogs_fr.json');
-      if (lang === 'es') return require('./data/blogs_es.json');
-      if (lang === 'zh') return require('./data/blogs_zh.json');
-      if (lang === 'hi') return require('./data/blogs_hi.json');
-      if (lang === 'pt') return require('./data/blogs_pt.json');
-      return require('./data/blogs.json');
-    } else {
-      if (lang === 'fr') return require('./data/faqs_fr.json');
-      if (lang === 'es') return require('./data/faqs_es.json');
-      if (lang === 'zh') return require('./data/faqs_zh.json');
-      if (lang === 'hi') return require('./data/faqs_hi.json');
-      if (lang === 'pt') return require('./data/faqs_pt.json');
-      return require('./data/faqs.json');
-    }
-  } catch(e) {
-    return type === 'blog' ? require('./data/blogs.json') : require('./data/faqs.json');
+  if (type === 'blog') {
+    if (lang === 'fr') return blogsFr;
+    if (lang === 'es') return blogsEs;
+    if (lang === 'zh') return blogsZh;
+    if (lang === 'hi') return blogsHi;
+    if (lang === 'pt') return blogsPt;
+    return blogsEn;
+  } else {
+    if (lang === 'fr') return faqsFr;
+    if (lang === 'es') return faqsEs;
+    if (lang === 'zh') return faqsZh;
+    if (lang === 'hi') return faqsHi;
+    if (lang === 'pt') return faqsPt;
+    return faqsEn;
   }
 };
 
@@ -176,26 +185,26 @@ export function App() {
       
       <Header 
         activeTab={activeTab} 
-        onTabChange={(tab) => {
+        setActiveTab={(tab) => {
           setActiveTab(tab);
           if (tab !== 'seo') {
             window.history.replaceState({}, document.title, '/');
           }
         }}
+        subscription={subscription}
+        onOpenPricing={() => setShowPricing(true)}
         user={user}
-        onSignInClick={() => setShowAuth(true)}
+        onOpenAuth={() => setShowAuth(true)}
         onLogout={handleLogout}
-        isPro={subscription.isPro}
-        onUpgradeClick={() => setShowPricing(true)}
       />
 
       <main className="pt-20 pb-24">
         {activeTab === 'scan' && (
           <PlateScanner 
-            onScanComplete={handleScanComplete} 
+            onAnalysisComplete={handleScanComplete} 
             scansRemaining={subscription.scansRemaining}
             isPro={subscription.isPro}
-            onUpgradeClick={() => setShowPricing(true)}
+            onOpenPricing={() => setShowPricing(true)}
           />
         )}
         
